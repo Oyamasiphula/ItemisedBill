@@ -1,7 +1,5 @@
 var fs = require('fs');
 // var salesFileUtilities = require('./sales_file_utilities');
-var fileName = '/ItemisedBill.csv';
-
 
 var getBillCsvData = function(fileName){
        var linesInFiles = []; //list to store csvied stuff
@@ -11,33 +9,32 @@ var getBillCsvData = function(fileName){
            lines.forEach(function(line){
             linesInFiles.push(line);//push lines in the files to list you created
   });
-
-     console.log(linesInFiles);
-     return linesInFiles;// return lines in files
+		console.log(linesInFiles);
+	     return linesInFiles;// retursn lines in files
 }
 
-var getTotalCalls = function(salesLines){
-	   var totalCallsPerperProvider = {};
-	 		salesLines.forEach(function(line){
-        //split each line into fields
-        var fields = line.split(",");
-        var serviceProviderName = fields[1];
-        var cellNo = fields[3];
-        
-        // var salesPrice = fields[4];
-        // salesPrice = salesPrice.substring(1)
-        // salesPrice = salesPrice.replace(",", 333
+var getTotalCalls = function(fileName){
+			var linesInFile = fs.readFileSync(fileName, "utf8"); 
+			var lines = linesInFile.split('\r').splice(1);
+			var listOfBills =[];
 
-        if(totalCallsPerperProvider[serviceProviderName] === undefined){
-            totalCallsPerperProvider[serviceProviderName] = 0;
-        };
+			lines.forEach(function(fileLines){
 
-        totalCallsPerperProvider[serviceProviderName] = totalCallsPerperProvider[serviceProviderName] + Number(cellNo);
-               
-    });
-	return totalCallsPerperProvider;
+				var product = fileLines.split(',');
+				
+				var currentProvider = product[1];
+				var callNos = product[2];
 
-};
+				var serviceProvider = {
+					providerName : currentProvider,
+					cellNos : Number(callNos)
+				};
+
+				listOfBills.push(serviceProvider);
+			  });
+			console.log(listOfBills);
+			return listOfBills
+		};
 
 
 module.exports.getBillCsvData = getBillCsvData;

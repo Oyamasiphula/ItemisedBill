@@ -1,5 +1,5 @@
 var assert = require('assert');
-var getBillCsvData = require('../modules/dataWorkouts.js');
+var billCsv = require('../modules/dataWorkouts');
  	
 		it('Should check if finding function getBillCsvData typeof function', function(done){
 			var getBillCsvData = require('../modules/dataWorkouts.js').getBillCsvData
@@ -8,12 +8,12 @@ var getBillCsvData = require('../modules/dataWorkouts.js');
 							done()
 		});
 		it('Should return the correct number of lines from itemisedBill CSV file', function(done){
-			var reader = getBillCsvData.getBillCsvData('./ItemisedBill.csv');
+			var reader = billCsv.getBillCsvData('./ItemisedBill.csv');
 	    		assert.equal(35, reader.length);
 		         	done()
 		});
 		it('Should return the correct number of lines from itemisedBill CSV file', function(done){
-				var getCallNoForEachProvider = getBillCsvData.getTotalCalls('./ItemisedBill.csv');      
+				var getCallNoForEachProvider = billCsv.getProviderCallLists('./ItemisedBill.csv');      
 				var results =  
 							 [{providerName:"MTN",cellNos:0832401145},
 				             {providerName:"MTN",cellNos:0838758090},
@@ -54,3 +54,9 @@ var getBillCsvData = require('../modules/dataWorkouts.js');
              assert.deepEqual(results,getCallNoForEachProvider)
 	             done()
         });
+		it('Should return the correct number of lines from itemisedBill CSV file', function(done){
+					var reader = billCsv.testingOtherFunctionsMethod('./ItemisedBill.csv');
+
+			    		assert.equal();
+				         	done()
+				});
